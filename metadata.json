@@ -1,0 +1,6 @@
+{
+  "name": "SIVYH San Francisco - Sistema de Inventario y Obras",
+  "description": "Sistema profesional de gestión de inventario, materiales, almacén y control de avances de obras para la Dirección de Vivienda y Hábitat de la Alcaldía Bolivariana de San Francisco, Estado Zulia.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

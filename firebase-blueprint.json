@@ -1,0 +1,171 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "System user with role-based permissions for Dirección de Vivienda y Hábitat",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "maxLength": 120 },
+        "username": { "type": "string", "maxLength": 60 },
+        "email": { "type": "string", "format": "email", "maxLength": 150 },
+        "role": { "type": "string", "enum": ["admin", "almacenista", "ingeniero_obras", "consulta"], "maxLength": 30 },
+        "department": { "type": "string", "maxLength": 100 },
+        "active": { "type": "boolean" },
+        "ownerId": { "type": "string", "pattern": "^[a-zA-Z0-9_\\-]+$", "maxLength": 128 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "username", "role", "department", "active", "ownerId", "createdAt", "updatedAt"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Construction and housing material item in the municipal warehouse",
+      "type": "object",
+      "properties": {
+        "code": { "type": "string", "maxLength": 40 },
+        "name": { "type": "string", "maxLength": 160 },
+        "category": { "type": "string", "maxLength": 80 },
+        "unit": { "type": "string", "maxLength": 30 },
+        "stock": { "type": "number" },
+        "minStock": { "type": "number" },
+        "unitCost": { "type": "number" },
+        "warehouse": { "type": "string", "maxLength": 100 },
+        "supplierName": { "type": "string", "maxLength": 140 },
+        "status": { "type": "string", "enum": ["disponible", "stock_bajo", "agotado"], "maxLength": 30 },
+        "ownerId": { "type": "string", "pattern": "^[a-zA-Z0-9_\\-]+$", "maxLength": 128 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["code", "name", "category", "unit", "stock", "minStock", "unitCost", "warehouse", "supplierName", "status", "ownerId", "createdAt", "updatedAt"]
+    },
+    "Category": {
+      "title": "Category",
+      "description": "Material classification category",
+      "type": "object",
+      "properties": {
+        "code": { "type": "string", "maxLength": 30 },
+        "name": { "type": "string", "maxLength": 100 },
+        "description": { "type": "string", "maxLength": 300 },
+        "ownerId": { "type": "string", "pattern": "^[a-zA-Z0-9_\\-]+$", "maxLength": 128 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["code", "name", "description", "ownerId", "createdAt", "updatedAt"]
+    },
+    "Supplier": {
+      "title": "Supplier",
+      "description": "Construction material vendor or institutional supplier",
+      "type": "object",
+      "properties": {
+        "rif": { "type": "string", "maxLength": 30 },
+        "name": { "type": "string", "maxLength": 150 },
+        "contactName": { "type": "string", "maxLength": 120 },
+        "phone": { "type": "string", "maxLength": 40 },
+        "address": { "type": "string", "maxLength": 250 },
+        "specialty": { "type": "string", "maxLength": 100 },
+        "ownerId": { "type": "string", "pattern": "^[a-zA-Z0-9_\\-]+$", "maxLength": 128 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["rif", "name", "contactName", "phone", "address", "specialty", "ownerId", "createdAt", "updatedAt"]
+    },
+    "Beneficiary": {
+      "title": "Beneficiary",
+      "description": "Housing beneficiary family, community council, or client in San Francisco",
+      "type": "object",
+      "properties": {
+        "cedulaRif": { "type": "string", "maxLength": 30 },
+        "name": { "type": "string", "maxLength": 150 },
+        "parish": { "type": "string", "maxLength": 80 },
+        "sector": { "type": "string", "maxLength": 150 },
+        "phone": { "type": "string", "maxLength": 40 },
+        "projectAssigned": { "type": "string", "maxLength": 150 },
+        "ownerId": { "type": "string", "pattern": "^[a-zA-Z0-9_\\-]+$", "maxLength": 128 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["cedulaRif", "name", "parish", "sector", "phone", "projectAssigned", "ownerId", "createdAt", "updatedAt"]
+    },
+    "Movement": {
+      "title": "Movement",
+      "description": "Stock entry or exit transaction in the inventory kardex",
+      "type": "object",
+      "properties": {
+        "type": { "type": "string", "enum": ["ENTRADA", "SALIDA", "AJUSTE"], "maxLength": 20 },
+        "productId": { "type": "string", "pattern": "^[a-zA-Z0-9_\\-]+$", "maxLength": 128 },
+        "productCode": { "type": "string", "maxLength": 40 },
+        "productName": { "type": "string", "maxLength": 160 },
+        "unit": { "type": "string", "maxLength": 30 },
+        "unitCost": { "type": "number" },
+        "quantity": { "type": "number" },
+        "previousStock": { "type": "number" },
+        "newStock": { "type": "number" },
+        "referenceDoc": { "type": "string", "maxLength": 60 },
+        "parish": { "type": "string", "maxLength": 80 },
+        "projectName": { "type": "string", "maxLength": 160 },
+        "counterparty": { "type": "string", "maxLength": 160 },
+        "responsibleName": { "type": "string", "maxLength": 120 },
+        "notes": { "type": "string", "maxLength": 400 },
+        "date": { "type": "string", "maxLength": 40 },
+        "ownerId": { "type": "string", "pattern": "^[a-zA-Z0-9_\\-]+$", "maxLength": 128 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["type", "productId", "productCode", "productName", "quantity", "previousStock", "newStock", "referenceDoc", "parish", "projectName", "counterparty", "responsibleName", "notes", "date", "ownerId", "createdAt"]
+    },
+    "Project": {
+      "title": "Project",
+      "description": "Housing or urban infrastructure work executed by Dirección de Vivienda y Hábitat",
+      "type": "object",
+      "properties": {
+        "code": { "type": "string", "maxLength": 40 },
+        "name": { "type": "string", "maxLength": 180 },
+        "parish": { "type": "string", "maxLength": 80 },
+        "sector": { "type": "string", "maxLength": 150 },
+        "engineer": { "type": "string", "maxLength": 120 },
+        "beneficiariesCount": { "type": "number" },
+        "budgetUsd": { "type": "number" },
+        "spentUsd": { "type": "number" },
+        "physicalProgress": { "type": "number" },
+        "financialProgress": { "type": "number" },
+        "status": { "type": "string", "enum": ["en_ejecucion", "planificado", "pausado", "culminado"], "maxLength": 30 },
+        "startDate": { "type": "string", "maxLength": 30 },
+        "targetDate": { "type": "string", "maxLength": 30 },
+        "lastUpdateNote": { "type": "string", "maxLength": 500 },
+        "ownerId": { "type": "string", "pattern": "^[a-zA-Z0-9_\\-]+$", "maxLength": 128 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["code", "name", "parish", "sector", "engineer", "beneficiariesCount", "budgetUsd", "spentUsd", "physicalProgress", "financialProgress", "status", "startDate", "targetDate", "lastUpdateNote", "ownerId", "createdAt", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "User profiles and RBAC role assignments"
+    },
+    "/products/{productId}": {
+      "schema": { "$ref": "#/entities/Product" },
+      "description": "Warehouse inventory products and construction materials"
+    },
+    "/categories/{categoryId}": {
+      "schema": { "$ref": "#/entities/Category" },
+      "description": "Material categories"
+    },
+    "/suppliers/{supplierId}": {
+      "schema": { "$ref": "#/entities/Supplier" },
+      "description": "Material suppliers and contractors"
+    },
+    "/beneficiaries/{beneficiaryId}": {
+      "schema": { "$ref": "#/entities/Beneficiary" },
+      "description": "Housing beneficiaries and community councils"
+    },
+    "/movements/{movementId}": {
+      "schema": { "$ref": "#/entities/Movement" },
+      "description": "Kardex inventory stock entry and exit movements"
+    },
+    "/projects/{projectId}": {
+      "schema": { "$ref": "#/entities/Project" },
+      "description": "Housing construction and rehabilitation works progress"
+    }
+  }
+}
